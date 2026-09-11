@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="https://raw.githubusercontent.com/digital-worms/.github/main/assets/digital-worms-logo.png" width="220" alt="Digital Worms Logo">
+
 # Digital Worms Backend
 
 ### Backend service for the Digital Worms platform
@@ -7,6 +9,14 @@
 A Go backend for organizing events, managing shared expenses, storing memories and building collaborative features for groups of friends.
 
 </div>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Go-Backend-00ADD8?logo=go&logoColor=white" alt="Go">
+  <img src="https://img.shields.io/badge/PostgreSQL-Database-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white" alt="Docker">
+  <img src="https://img.shields.io/badge/API-REST-6A5ACD" alt="REST API">
+  <img src="https://img.shields.io/badge/Status-Active_Development-orange" alt="Status">
+</p>
 
 ---
 
