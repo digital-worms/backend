@@ -1,4 +1,4 @@
-package main
+package httpapi
 
 import (
 	"encoding/json"
@@ -13,7 +13,7 @@ type healthResponse struct {
 
 func TestHealth(t *testing.T) {
 	request := httptest.NewRequest(http.MethodGet, "/health", nil)
-	router := registerRoutes()
+	router := NewRouter()
 	recorder := httptest.NewRecorder()
 
 	router.ServeHTTP(recorder, request)

@@ -1,4 +1,4 @@
-module github.com/digital-worms/core
+module github.com/digital-worms/backend
 
 go 1.25.3
 
