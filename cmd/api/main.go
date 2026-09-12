@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/gin-gonic/gin"
+	"github.com/digital-worms/backend/internal/httpapi"
 )
 
 const (
@@ -20,7 +20,7 @@ func main() {
 		httpAddr = defaultHTTPAddr
 	}
 
-	router := registerRoutes()
+	router := httpapi.NewRouter()
 
 	server := &http.Server{
 		Addr:              httpAddr,
@@ -32,20 +32,4 @@ func main() {
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatalf("Не удалось запустить сервер: %v", err)
 	}
-}
-
-func healthHandler(c *gin.Context) {
-	c.JSON(http.StatusOK,
-		gin.H{
-			"status": "ok",
-		},
-	)
-}
-
-func registerRoutes() *gin.Engine {
-	router := gin.Default()
-
-	router.GET("/health", healthHandler)
-
-	return router
 }
