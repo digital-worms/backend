@@ -19,7 +19,7 @@ func Load() (Config, error) {
 	}
 
 	if cfg.DatabaseURL == "" {
-		return Config{}, errors.New("DATABASE_URL не задан")
+		return Config{}, errors.New("DATABASE_URL is not set")
 	}
 	return cfg, nil
 }

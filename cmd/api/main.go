@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -9,6 +8,7 @@ import (
 	"github.com/digital-worms/backend/internal/config"
 	"github.com/digital-worms/backend/internal/database"
 	"github.com/digital-worms/backend/internal/httpapi"
+	"github.com/digital-worms/backend/internal/logger"
 )
 
 const (
@@ -17,9 +17,11 @@ const (
 )
 
 func main() {
+	appLogger := logger.New()
 	cfg, err := config.Load()
 	if err != nil {
-		log.Fatalf("Ошибка конфига: %v", err)
+		appLogger.Error("failed to load configuration", "error", err)
+		os.Exit(1)
 	}
 
 	httpAddr := os.Getenv("HTTP_ADDR")
@@ -29,10 +31,11 @@ func main() {
 
 	pool, err := database.ConnectPostgres(cfg.DatabaseURL)
 	if err != nil {
-		log.Fatalf("Не удалось подключиться к бд: %v", err)
+		appLogger.Error("failed to connect to PostgreSQL", "error", err)
+		os.Exit(1)
 	}
 	defer pool.Close()
-	log.Println("Подключение к бд прошло успешно")
+	appLogger.Info("connected to PostgreSQL")
 
 	router := httpapi.NewRouter()
 
@@ -42,8 +45,9 @@ func main() {
 		ReadHeaderTimeout: defaultReadHeaderTimeout,
 	}
 
-	log.Printf("Сервер запускается на %s", httpAddr)
+	appLogger.Info("starting HTTP server", "address", httpAddr)
 	if err := server.ListenAndServe(); err != nil {
-		log.Fatalf("Не удалось запустить сервер: %v", err)
+		appLogger.Error("failed to start HTTP server", "error", err)
+		os.Exit(1)
 	}
 }

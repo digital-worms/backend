@@ -2,7 +2,10 @@ module github.com/digital-worms/backend
 
 go 1.25.3
 
-require github.com/gin-gonic/gin v1.12.0
+require (
+	github.com/gin-gonic/gin v1.12.0
+	github.com/lmittmann/tint v1.2.0
+)
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect

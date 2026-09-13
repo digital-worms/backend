@@ -20,7 +20,7 @@ func ConnectPostgres(connStr string) (*pgxpool.Pool, error) {
 	// На этом этапе проверяется формат настроек, но соединение с БД ещё не подтверждено.
 	poolConfig, err := pgxpool.ParseConfig(connStr)
 	if err != nil {
-		return nil, fmt.Errorf("parse postgres config: %w", err)
+		return nil, fmt.Errorf("parse PostgreSQL config: %w", err)
 	}
 
 	// Ограничиваем максимальное количество соединений и просим пул
@@ -32,7 +32,7 @@ func ConnectPostgres(connStr string) (*pgxpool.Pool, error) {
 	// Успешное создание объекта пула ещё не гарантирует доступность PostgreSQL.
 	pool, err := pgxpool.NewWithConfig(ctx, poolConfig)
 	if err != nil {
-		return nil, fmt.Errorf("connect postgres: %w", err)
+		return nil, fmt.Errorf("create PostgreSQL connection pool: %w", err)
 	}
 
 	// Выполняем реальную проверку соединения. Если Ping завершается ошибкой,
@@ -40,7 +40,7 @@ func ConnectPostgres(connStr string) (*pgxpool.Pool, error) {
 	err = pool.Ping(ctx)
 	if err != nil {
 		pool.Close()
-		return nil, fmt.Errorf("Ping не прошёл: %w", err)
+		return nil, fmt.Errorf("ping PostgreSQL: %w", err)
 	}
 
 	// Возвращаем готовый пул вызывающему коду. Его владелец обязан
