@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# env files
+.env
+
+# database/local data
+pgdata/
+
+# Go build artifacts
+*.exe
+*.out
+bin/
+
+# IDE
+.vscode/
+.idea/
