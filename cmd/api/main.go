@@ -6,6 +6,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/digital-worms/backend/internal/config"
+	"github.com/digital-worms/backend/internal/database"
 	"github.com/digital-worms/backend/internal/httpapi"
 )
 
@@ -15,10 +17,22 @@ const (
 )
 
 func main() {
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatalf("Ошибка конфига: %v", err)
+	}
+
 	httpAddr := os.Getenv("HTTP_ADDR")
 	if httpAddr == "" {
 		httpAddr = defaultHTTPAddr
 	}
+
+	pool, err := database.ConnectPostgres(cfg.DatabaseURL)
+	if err != nil {
+		log.Fatalf("Не удалось подключиться к бд: %v", err)
+	}
+	defer pool.Close()
+	log.Println("Подключение к бд прошло успешно")
 
 	router := httpapi.NewRouter()
 
