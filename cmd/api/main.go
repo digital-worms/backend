@@ -37,7 +37,7 @@ func main() {
 	defer pool.Close()
 	appLogger.Info("connected to PostgreSQL")
 
-	router := httpapi.NewRouter()
+	router := httpapi.NewRouter(pool)
 
 	server := &http.Server{
 		Addr:              httpAddr,
