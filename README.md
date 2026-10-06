@@ -129,7 +129,37 @@ The backend architecture and core functionality are currently being designed and
 
 ## Development
 
-Detailed local development instructions will be added as the project infrastructure becomes stable.
+### Database migrations
+
+The Goose CLI is managed by the Go module, so no separate global installation is needed.
+
+1. Copy `.env.example` to `.env` and adjust the local database credentials if needed.
+2. Start PostgreSQL with Docker Compose:
+
+   ```sh
+   docker compose up -d postgres
+   ```
+
+3. Validate the migration files and inspect the database migration status:
+
+   ```sh
+   go tool goose -dir ./migrations validate
+   go tool goose -dir ./migrations status
+   ```
+
+4. Apply pending migrations:
+
+   ```sh
+   go tool goose -dir ./migrations up
+   ```
+
+Goose reads the connection settings from `.env` (`GOOSE_DRIVER` and `GOOSE_DBSTRING`).
+`validate` checks the migration files; `status` and `up` connect to PostgreSQL.
+
+To roll back the latest migration in a local development database, use
+`go tool goose -dir ./migrations down`. This runs the migration's `Down` section and
+can remove database objects and their data, so do not use it against a database whose
+data you need to keep.
 
 ---
 
